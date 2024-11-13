@@ -78,9 +78,7 @@ def show_date():
             gregorian_date = datetime(year, month, day)
             day_of_year = gregorian_date.timetuple().tm_yday
             
-            # Adjust for leap year if the date is after February in a leap year
-            if is_leap_year(year) and month > 2:
-                day_of_year += 1
+
 
             custom_month, custom_day_of_month, custom_day_of_week = dayfinder(day_of_year)
             
