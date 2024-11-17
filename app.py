@@ -3,10 +3,6 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-def is_leap_year(year):
-    # Check if the year is a leap year
-    return (year % 4 == 0 and (year % 100 != 0 or year % 400 == 0))
-
 def dayfinder(day_of_year):
     if 1 <= day_of_year <= 28:
         month = "Boozer"
@@ -77,10 +73,6 @@ def show_date():
         try:
             gregorian_date = datetime(year, month, day)
             day_of_year = gregorian_date.timetuple().tm_yday
-            
-            # Only add an extra day if it's after February in a leap year
-            if is_leap_year(year) and (month > 2):
-                day_of_year += 1
 
             custom_month, custom_day_of_month, custom_day_of_week = dayfinder(day_of_year)
             
