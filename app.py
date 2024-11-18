@@ -47,16 +47,16 @@ def dayfinder(day_of_year):
     day_of_month = day_of_year - start_day + 1
     last_digit = day_of_year % 10
     day_of_week = {
-        1: "murday",
-        2: "duoday",
-        3: "tresday",
-        4: "issiday",
-        5: "wensday",
-        6: "sexday",
-        7: "curryday",
-        8: "friday",
-        9: "saturday",
-        0: "verday"
+        1: "Murday",
+        2: "Duoday",
+        3: "Tresday",
+        4: "Issiday",
+        5: "Wensday",
+        6: "Sexday",
+        7: "Curryday",
+        8: "Friday",
+        9: "Saturday",
+        0: "Verday"
     }.get(last_digit, "unknown")
     return month, day_of_month, day_of_week
 
@@ -136,11 +136,12 @@ def show_date():
     <body>
         <h1>Date Converter</h1>
         <form method="POST">
-            <label for="month">Month:</label>
-            <input type="number" id="month" name="month" min="1" max="12" required>
-            
+
             <label for="day">Day:</label>
             <input type="number" id="day" name="day" min="1" max="31" required>
+            
+            <label for="month">Month:</label>
+            <input type="number" id="month" name="month" min="1" max="12" required>
             
             <label for="year">Year:</label>
             <input type="number" id="year" name="year" min="1" max="9999" required>
