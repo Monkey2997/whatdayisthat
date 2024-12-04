@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Converter</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #9066a5;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            font-size: 2em;
+            color: #ffffff;
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        label, input {
+            margin: 5px;
+            font-size: 1.2em;
+            color: #ffffff;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+        .output {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Date Converter</h1>
+    <form id="date-form">
+        <label for="day">Day:</label>
+        <input type="number" id="day" name="day" min="1" max="31" required>
+        
+        <label for="month">Month:</label>
+        <input type="number" id="month" name="month" min="1" max="12" required>
+        
+        <label for="year">Year:</label>
+        <input type="number" id="year" name="year" min="1" max="9999" required>
+        
+        <button type="button" onclick="convertDate()">Convert</button>
+    </form>
+    
+    <div class="output" id="output-text"></div>
+
+    <script>
+        function dayFinder(dayOfYear) {
+            let month, startDay;
+
+            if (1 <= dayOfYear && dayOfYear <= 28) {
+                month = "Boozer";
+                startDay = 1;
+            } else if (29 <= dayOfYear && dayOfYear <= 56) {
+                month = "Chipper";
+                startDay = 29;
+            } else if (57 <= dayOfYear && dayOfYear <= 84) {
+                month = "Kucheeder";
+                startDay = 57;
+            } else if (85 <= dayOfYear && dayOfYear <= 112) {
+                month = "Warder";
+                startDay = 85;
+            } else if (113 <= dayOfYear && dayOfYear <= 140) {
+                month = "Forgorder";
+                startDay = 113;
+            } else if (141 <= dayOfYear && dayOfYear <= 168) {
+                month = "Crabber";
+                startDay = 141;
+            } else if (169 <= dayOfYear && dayOfYear <= 196) {
+                month = "Monker";
+                startDay = 169;
+            } else if (197 <= dayOfYear && dayOfYear <= 224) {
+                month = "Mechanicer";
+                startDay = 197;
+            } else if (225 <= dayOfYear && dayOfYear <= 252) {
+                month = "Ferrer";
+                startDay = 225;
+            } else if (253 <= dayOfYear && dayOfYear <= 280) {
+                month = "Penner";
+                startDay = 253;
+            } else if (281 <= dayOfYear && dayOfYear <= 308) {
+                month = "Juler";
+                startDay = 281;
+            } else if (309 <= dayOfYear && dayOfYear <= 336) {
+                month = "Slother";
+                startDay = 309;
+            } else {
+                month = "Skiver";
+                startDay = 337;
+            }
+
+            const dayOfMonth = dayOfYear - startDay + 1;
+            const lastDigit = dayOfYear % 10;
+            const dayOfWeek = {
+                1: "Murday",
+                2: "Duoday",
+                3: "Tresday",
+                4: "Issiday",
+                5: "Wensday",
+                6: "Sexday",
+                7: "Curryday",
+                8: "Friday",
+                9: "Saturday",
+                0: "Verday"
+            }[lastDigit] || "unknown";
+
+            return { month, dayOfMonth, dayOfWeek };
+        }
+
+        function convertDate() {
+            const day = parseInt(document.getElementById("day").value);
+            const month = parseInt(document.getElementById("month").value);
+            const year = parseInt(document.getElementById("year").value);
+
+            const outputTextElement = document.getElementById("output-text");
+
+            try {
+                const gregorianDate = new Date(year, month - 1, day);
+                if (isNaN(gregorianDate.getTime())) throw new Error();
+
+                // Calculate the day of the year
+                const startOfYear = new Date(year, 0, 1);
+                const dayOfYear = Math.floor((gregorianDate - startOfYear) / (1000 * 60 * 60 * 24)) + 1;
+
+                const { month: customMonth, dayOfMonth, dayOfWeek } = dayFinder(dayOfYear);
+
+                // Determine suffix for the day
+                const suffix = (dayOfMonth % 10 === 1 && dayOfMonth !== 11) ? "st" :
+                               (dayOfMonth % 10 === 2 && dayOfMonth !== 12) ? "nd" :
+                               (dayOfMonth % 10 === 3 && dayOfMonth !== 13) ? "rd" : "th";
+
+                outputTextElement.textContent = `The equivalent date is ${dayOfWeek}, the ${dayOfMonth}${suffix} of ${customMonth}.`;
+
+            } catch (error) {
+                outputTextElement.textContent = "Invalid date! Please enter a valid Gregorian date.";
+            }
+        }
+    </script>
+</body>
+</html>
